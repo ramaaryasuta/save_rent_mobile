@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'core/routing/app_route.dart';
+import 'core/services/app_theme_service.dart';
+import 'core/theme/app_theme.dart';
 import 'features/home/ui/provider/home_provider.dart';
 import 'utils/print_log.dart';
 
@@ -13,7 +15,10 @@ void main() {
       WidgetsFlutterBinding.ensureInitialized();
       runApp(
         MultiProvider(
-          providers: [ChangeNotifierProvider(create: (_) => HomeProvider())],
+          providers: [
+            ChangeNotifierProvider(create: (_) => AppThemeProvider()),
+            ChangeNotifierProvider(create: (_) => HomeProvider()),
+          ],
           child: const MyApp(),
         ),
       );
@@ -32,9 +37,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: appRoute,
-      debugShowCheckedModeBanner: false,
+    return Consumer<AppThemeProvider>(
+      builder: (context, appThemeP, _) {
+        return MaterialApp.router(
+          routerConfig: appRoute,
+          debugShowCheckedModeBanner: false,
+          theme: appThemeData(appThemeP),
+        );
+      },
     );
   }
 }
