@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/extensions/context_extension.dart';
+import '../../core/prefs/pref_extension.dart';
 import '../../core/routing/app_route_path.dart';
 import '../../utils/utils_app.dart';
 
@@ -19,11 +20,15 @@ class _SplashScreenState extends State<SplashScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _redirectScreen());
   }
 
-  void _redirectScreen() {
-    Future.delayed(const Duration(seconds: 1), () {
-      if (!mounted) return;
+  Future<void> _redirectScreen() async {
+    String? userToken = await getToken();
+
+    if (!mounted) return;
+    if (userToken != null && userToken.isNotEmpty) {
       context.go(AppRoutePath.homeRoute);
-    });
+    } else {
+      context.go(AppRoutePath.loginRoute);
+    }
   }
 
   @override
