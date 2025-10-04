@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../utils/ui_helper.dart';
 import '../../../../utils/utils_app.dart';
+import 'components/logout_dialog.dart';
 
 class HeroBanner extends StatelessWidget {
   const HeroBanner({super.key});
@@ -16,23 +17,32 @@ class HeroBanner extends StatelessWidget {
         left: 20,
         right: 20,
       ),
-      decoration: BoxDecoration(
-        color: context.primaryColor,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
-      ),
+      decoration: BoxDecoration(color: context.primaryColor),
       child: Column(
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'SaveRent',
-            style: context.headlineSmallTextStyle!.copyWith(
-              color: context.onPrimaryColor,
-              fontWeight: FontWeight.bold,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'SaveRent',
+                style: context.headlineSmallTextStyle!.copyWith(
+                  color: context.onPrimaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  logoutDialog(context);
+                },
+                icon: Icon(
+                  Icons.logout,
+                  color: context.onPrimaryColor,
+                  size: 22,
+                ),
+              ),
+            ],
           ),
           FutureBuilder(
             future: getGreetingByTime(),

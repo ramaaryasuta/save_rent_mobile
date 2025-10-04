@@ -5,11 +5,13 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../components/button/filled_button.dart';
+import '../../../../components/image/asset_image.dart';
 import '../../../../components/snackbar.dart';
 import '../../../../components/text_field/form_text_field.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/prefs/pref_extension.dart';
 import '../../../../core/routing/app_route_path.dart';
+import '../../../../gen/assets.gen.dart';
 import '../../../../utils/validator.dart';
 import '../provider/auth_provider.dart';
 
@@ -68,10 +70,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
         if (_rememberMe) {
           await Future.wait([
-            setRememberMe(_rememberMe),
+            setRememberMe(true),
             setEmail(_emailController.text),
             setPassword(_passwordController.text),
           ]);
+        } else {
+          await setRememberMe(false);
+          await removeEmailAndPass();
         }
 
         if (mounted) {
@@ -80,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
             message: 'Login Berhasil',
             type: SnackbarType.success,
           );
-          // context.go(AppRoutePath.homeRoute);
+          context.go(AppRoutePath.homeRoute);
         }
       } else {
         showSnackbar(
@@ -107,6 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
             spacing: 20,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              MAssetImage(Assets.images.logoSaverent.path, height: 250),
               Form(
                 key: _formKey,
                 child: Column(

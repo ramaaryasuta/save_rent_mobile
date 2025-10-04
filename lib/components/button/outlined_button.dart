@@ -34,7 +34,7 @@ class MOutlineButton extends StatelessWidget {
             foregroundColor: borderColor ?? context.primaryColor,
             padding:
                 padding ??
-                const EdgeInsets.symmetric(horizontal: 15, vertical: 18),
+                const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             side: BorderSide(color: borderColor ?? context.primaryColor),
           ),
           child: icon == null

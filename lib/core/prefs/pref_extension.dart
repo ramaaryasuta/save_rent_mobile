@@ -32,6 +32,12 @@ Future<String> getPassword() async {
   return prefs.getString(PrefKeys.password) ?? '';
 }
 
+Future<void> removeEmailAndPass() async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.remove(PrefKeys.email);
+  await prefs.remove(PrefKeys.password);
+}
+
 Future<void> setToken(String value) async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.setString(PrefKeys.token, value);

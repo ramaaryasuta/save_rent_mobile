@@ -7,37 +7,31 @@ class MIconButton extends StatelessWidget {
     super.key,
     required this.title,
     required this.icon,
-    this.onTap,
+    required this.onTap,
   });
 
   final String title;
-  final IconData icon;
-  final VoidCallback? onTap;
+  final Widget icon;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 55, minWidth: 55),
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 60, minWidth: 60),
       child: InkWell(
         onTap: onTap,
         child: Column(
           spacing: 5,
           children: [
             Container(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: context.onPrimaryColor.withValues(alpha: .3),
-                borderRadius: BorderRadius.circular(10),
+                shape: BoxShape.circle,
+                color: context.primaryColor.withValues(alpha: .15),
               ),
-              child: Icon(icon, color: context.onPrimaryColor),
+              child: icon,
             ),
-            Text(
-              title,
-              overflow: TextOverflow.ellipsis,
-              style: context.bodyMediumTextStyle!.copyWith(
-                color: context.onPrimaryColor,
-              ),
-            ),
+            Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
           ],
         ),
       ),

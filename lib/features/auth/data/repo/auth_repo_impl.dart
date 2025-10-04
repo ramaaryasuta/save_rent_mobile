@@ -1,6 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import '../../../../core/api/api_path.dart';
 import '../../../../core/api/api_service.dart';
 import '../../../../core/api/model/response_state.dart';
+import '../../../../core/prefs/pref_extension.dart';
+import '../../../../core/routing/app_route_path.dart' show AppRoutePath;
 import '../../../../utils/print_log.dart';
 import '../../domain/entities/login_param.dart';
 import '../../domain/entities/register_param.dart';
@@ -64,6 +69,14 @@ class AuthRepoImpl implements AuthRepo {
     } catch (e) {
       printLog('registerUser : $e', type: LogType.error);
       return ResponseState(success: false, message: e.toString());
+    }
+  }
+
+  @override
+  Future<void> logoutUser(BuildContext context) async {
+    await clearToken();
+    if (context.mounted) {
+      context.go(AppRoutePath.loginRoute);
     }
   }
 }

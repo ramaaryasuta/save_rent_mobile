@@ -40,4 +40,8 @@ class AuthProvider with ChangeNotifier {
     setLoading(false);
     return response;
   }
+
+  Future<void> logoutUser(BuildContext context) async {
+    await _authRepo.logoutUser(context);
+  }
 }
